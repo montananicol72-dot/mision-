@@ -1,0 +1,1064 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Gran Misión de la Multiplicación</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:"Trebuchet MS",Arial,sans-serif;
+    background:linear-gradient(135deg,#dff7ff,#fff4c7);
+    color:#17324d;
+}
+
+.hidden{
+    display:none!important;
+}
+
+.app{
+    min-height:100vh;
+    padding:20px;
+}
+
+.screen{
+    max-width:950px;
+    margin:auto;
+    background:white;
+    border-radius:30px;
+    padding:30px;
+    box-shadow:0 15px 40px rgba(23,50,77,.18);
+}
+
+/* PORTADA */
+
+.cover{
+    min-height:92vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(160deg,#e9fbff,#fff8d8);
+}
+
+.hero{
+    width:100%;
+    max-width:760px;
+    text-align:center;
+}
+
+.badge{
+    display:inline-block;
+    background:#ffd43b;
+    padding:10px 20px;
+    border-radius:30px;
+    font-weight:bold;
+}
+
+.illustration{
+    font-size:70px;
+    margin:15px 0;
+}
+
+h1{
+    color:#087ee8;
+    font-size:clamp(34px,7vw,62px);
+    line-height:1.05;
+    margin:10px 0;
+}
+
+.subtitle{
+    font-size:20px;
+    line-height:1.5;
+}
+
+.form-card{
+    background:#f4fbff;
+    border:3px solid #bce8ff;
+    border-radius:25px;
+    padding:25px;
+    margin-top:25px;
+    text-align:left;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin:14px 0 7px;
+}
+
+input,
+select{
+    width:100%;
+    padding:15px;
+    border:2px solid #9edcff;
+    border-radius:15px;
+    font-size:17px;
+    background:white;
+}
+
+button{
+    border:0;
+    border-radius:16px;
+    padding:14px 22px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.15s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+.primary{
+    background:#087ee8;
+    color:white;
+}
+
+.success{
+    background:#35c978;
+    color:white;
+}
+
+.center{
+    text-align:center;
+}
+
+/* JUEGO */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.score{
+    background:#fff2a8;
+    padding:12px 18px;
+    border-radius:15px;
+    font-weight:bold;
+}
+
+.progress{
+    height:15px;
+    background:#e6edf2;
+    border-radius:20px;
+    overflow:hidden;
+    margin:20px 0;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    width:0%;
+    background:#15b9e8;
+    transition:.3s;
+}
+
+.question{
+    text-align:center;
+    background:#effaff;
+    border-radius:25px;
+    padding:25px;
+    margin:20px 0;
+}
+
+.question-icon{
+    font-size:55px;
+}
+
+.question h2{
+    font-size:40px;
+    margin:10px 0;
+}
+
+.answers{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.answer{
+    background:white;
+    border:3px solid #bde8ff;
+    color:#17324d;
+    box-shadow:none;
+}
+
+.answer:hover{
+    background:#eefaff;
+}
+
+.answer.correct{
+    background:#c9f7d9;
+    border-color:#35c978;
+}
+
+.answer.wrong{
+    background:#ffd1d1;
+    border-color:#ff6b6b;
+}
+
+.feedback{
+    min-height:40px;
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    margin:15px;
+}
+
+.stars{
+    font-size:48px;
+    margin:15px;
+}
+
+.final-score{
+    color:#087ee8;
+    font-size:60px;
+    font-weight:bold;
+}
+
+.error{
+    color:#e05252;
+    font-weight:bold;
+    text-align:center;
+}
+
+@media(max-width:650px){
+
+    .app{
+        padding:10px;
+    }
+
+    .screen{
+        padding:18px;
+        border-radius:22px;
+    }
+
+    .answers{
+        grid-template-columns:1fr;
+    }
+
+    .question h2{
+        font-size:32px;
+    }
+
+    .illustration{
+        font-size:55px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- ================= PORTADA ================= -->
+
+<section id="home" class="screen cover">
+
+<div class="hero">
+
+<div class="badge">
+🎒 JUEGO EDUCATIVO · PRIMARIA
+</div>
+
+<div class="illustration">
+🚀 ✏️ 🔢 ⭐
+</div>
+
+<h1>
+LA GRAN MISIÓN<br>
+DE LA MULTIPLICACIÓN
+</h1>
+
+<p class="subtitle">
+🚀 ¡Prepárate para una aventura matemática!<br>
+Resuelve los retos, gana puntos y conviértete en una estrella de las multiplicaciones.
+</p>
+
+<div class="form-card">
+
+<label for="name">
+👤 Nombre del jugador
+</label>
+
+<input
+id="name"
+type="text"
+placeholder="Escribe tu nombre"
+>
+
+<label for="course">
+🏫 Curso
+</label>
+
+<select id="course">
+
+<option value="">
+Selecciona tu curso
+</option>
+
+<option>
+Segundo A
+</option>
+
+<option>
+Segundo B
+</option>
+
+</select>
+
+<label for="shift">
+🌞 Jornada
+</label>
+
+<select id="shift">
+
+<option value="">
+Selecciona tu jornada
+</option>
+
+<option>
+Mañana
+</option>
+
+<option>
+Tarde
+</option>
+
+</select>
+
+<button
+class="primary"
+style="width:100%;margin-top:20px"
+onclick="startGame()"
+>
+🚀 COMENZAR MISIÓN
+</button>
+
+<p id="homeError" class="error"></p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= JUEGO ================= -->
+
+<section id="game" class="screen hidden">
+
+<div class="topbar">
+
+<div>
+
+<strong>
+👋 ¡Hola, <span id="playerName"></span>!
+</strong>
+
+<br>
+
+<small id="playerInfo"></small>
+
+</div>
+
+<div class="score">
+
+⭐ Puntos:
+<span id="score">
+0
+</span>
+
+</div>
+
+</div>
+
+
+<div class="progress">
+
+<span id="progressBar"></span>
+
+</div>
+
+
+<div class="center">
+
+<strong>
+Pregunta
+<span id="questionNumber">
+1
+</span>
+
+de
+
+<span id="totalQuestions">
+6
+</span>
+
+</strong>
+
+</div>
+
+
+<div class="question">
+
+<div id="questionIcon" class="question-icon">
+🧠
+</div>
+
+<h2 id="questionText">
+</h2>
+
+</div>
+
+
+<div
+id="answers"
+class="answers"
+>
+</div>
+
+
+<div
+id="feedback"
+class="feedback"
+>
+</div>
+
+
+<div class="center">
+
+<button
+id="nextButton"
+class="success hidden"
+onclick="nextQuestion()"
+>
+➡️ SIGUIENTE RETO
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= RESULTADO ================= -->
+
+<section id="result" class="screen hidden center">
+
+<div class="illustration">
+🏆 🎉 🌟
+</div>
+
+<h1>
+¡MISIÓN COMPLETADA!
+</h1>
+
+<p class="subtitle">
+
+Excelente trabajo,
+
+<strong id="finalName"></strong>
+
+<br>
+
+¡Terminaste todos los retos matemáticos!
+
+</p>
+
+
+<div class="form-card">
+
+<div class="final-score">
+
+<span id="finalScore">
+0
+</span>
+
+puntos
+
+</div>
+
+<div
+id="finalStars"
+class="stars"
+>
+</div>
+
+<p
+id="finalMessage"
+class="subtitle"
+>
+</p>
+
+</div>
+
+
+<button
+class="primary"
+onclick="restartGame()"
+>
+🔄 JUGAR DE NUEVO
+</button>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   PREGUNTAS
+========================================= */
+
+const questionBank = [
+
+{
+question:"¿Cuánto es 2 × 3?",
+answer:6,
+options:[6,5,8,4],
+icon:"🚀"
+},
+
+{
+question:"¿Cuánto es 4 × 2?",
+answer:8,
+options:[7,8,6,9],
+icon:"⭐"
+},
+
+{
+question:"¿Cuánto es 3 × 5?",
+answer:15,
+options:[12,15,18,10],
+icon:"🧩"
+},
+
+{
+question:"¿Cuánto es 5 × 2?",
+answer:10,
+options:[8,12,10,15],
+icon:"🎈"
+},
+
+{
+question:"¿Cuánto es 4 × 4?",
+answer:16,
+options:[14,16,12,18],
+icon:"🦸"
+},
+
+{
+question:"¿Cuánto es 2 × 6?",
+answer:12,
+options:[10,14,12,8],
+icon:"🏆"
+}
+
+];
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let questions = [];
+
+let currentQuestion = 0;
+
+let score = 0;
+
+let answered = false;
+
+
+/* =========================================
+   MEZCLAR
+========================================= */
+
+function shuffle(array){
+
+    return [...array].sort(
+        () => Math.random() - 0.5
+    );
+
+}
+
+
+/* =========================================
+   COMENZAR
+========================================= */
+
+function startGame(){
+
+    const name =
+        document.getElementById("name").value.trim();
+
+    const course =
+        document.getElementById("course").value;
+
+    const shift =
+        document.getElementById("shift").value;
+
+    const error =
+        document.getElementById("homeError");
+
+
+    if(
+        !name ||
+        !course ||
+        !shift
+    ){
+
+        error.textContent =
+        "⚠️ Completa tu nombre, curso y jornada para comenzar.";
+
+        return;
+
+    }
+
+
+    error.textContent = "";
+
+
+    questions =
+        shuffle(questionBank).map(question => {
+
+            return {
+
+                ...question,
+
+                options:
+                    shuffle(question.options)
+
+            };
+
+        });
+
+
+    currentQuestion = 0;
+
+    score = 0;
+
+
+    document
+        .getElementById("home")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("result")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("game")
+        .classList
+        .remove("hidden");
+
+
+    document
+        .getElementById("playerName")
+        .textContent = name;
+
+
+    document
+        .getElementById("playerInfo")
+        .textContent =
+        course + " · Jornada " + shift;
+
+
+    document
+        .getElementById("score")
+        .textContent = score;
+
+
+    document
+        .getElementById("totalQuestions")
+        .textContent = questions.length;
+
+
+    showQuestion();
+
+}
+
+
+/* =========================================
+   MOSTRAR PREGUNTA
+========================================= */
+
+function showQuestion(){
+
+    answered = false;
+
+
+    const question =
+        questions[currentQuestion];
+
+
+    document
+        .getElementById("questionNumber")
+        .textContent =
+        currentQuestion + 1;
+
+
+    document
+        .getElementById("questionText")
+        .textContent =
+        question.question;
+
+
+    document
+        .getElementById("questionIcon")
+        .textContent =
+        question.icon;
+
+
+    document
+        .getElementById("feedback")
+        .textContent = "";
+
+
+    document
+        .getElementById("nextButton")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("progressBar")
+        .style.width =
+        (
+            currentQuestion /
+            questions.length *
+            100
+        ) + "%";
+
+
+    const answers =
+        document.getElementById("answers");
+
+
+    answers.innerHTML = "";
+
+
+    question.options.forEach(
+        (option,index) => {
+
+            const button =
+                document.createElement("button");
+
+
+            button.className =
+                "answer";
+
+
+            button.textContent =
+                String.fromCharCode(65 + index)
+                + ") "
+                + option;
+
+
+            button.onclick =
+                () =>
+                checkAnswer(
+                    button,
+                    option,
+                    question.answer
+                );
+
+
+            answers.appendChild(button);
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   COMPROBAR RESPUESTA
+========================================= */
+
+function checkAnswer(
+    button,
+    selected,
+    correct
+){
+
+    if(answered){
+
+        return;
+
+    }
+
+
+    answered = true;
+
+
+    const buttons =
+        document.querySelectorAll(".answer");
+
+
+    buttons.forEach(
+        b => b.disabled = true
+    );
+
+
+    if(selected === correct){
+
+        score += 10;
+
+
+        button.classList.add("correct");
+
+
+        document
+            .getElementById("feedback")
+            .textContent =
+            "🎉 ¡Respuesta correcta! +10 puntos";
+
+    }
+
+    else{
+
+        button.classList.add("wrong");
+
+
+        buttons.forEach(
+            b => {
+
+                if(
+                    b.textContent.endsWith(
+                        String(correct)
+                    )
+                ){
+
+                    b.classList.add("correct");
+
+                }
+
+            }
+        );
+
+
+        document
+            .getElementById("feedback")
+            .textContent =
+            "💡 ¡Casi! La respuesta correcta era "
+            + correct
+            + ".";
+
+    }
+
+
+    document
+        .getElementById("score")
+        .textContent = score;
+
+
+    document
+        .getElementById("progressBar")
+        .style.width =
+        (
+            (currentQuestion + 1) /
+            questions.length *
+            100
+        ) + "%";
+
+
+    document
+        .getElementById("nextButton")
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* =========================================
+   SIGUIENTE PREGUNTA
+========================================= */
+
+function nextQuestion(){
+
+    currentQuestion++;
+
+
+    if(
+        currentQuestion <
+        questions.length
+    ){
+
+        showQuestion();
+
+    }
+
+    else{
+
+        finishGame();
+
+    }
+
+}
+
+
+/* =========================================
+   FINAL
+========================================= */
+
+function finishGame(){
+
+    document
+        .getElementById("game")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("result")
+        .classList
+        .remove("hidden");
+
+
+    const name =
+        document
+        .getElementById("name")
+        .value
+        .trim();
+
+
+    document
+        .getElementById("finalName")
+        .textContent = name;
+
+
+    document
+        .getElementById("finalScore")
+        .textContent = score;
+
+
+    let stars;
+
+
+    if(score === 60){
+
+        stars = "⭐⭐⭐⭐⭐";
+
+    }
+
+    else if(score >= 40){
+
+        stars = "⭐⭐⭐⭐";
+
+    }
+
+    else if(score >= 30){
+
+        stars = "⭐⭐⭐";
+
+    }
+
+    else if(score >= 20){
+
+        stars = "⭐⭐";
+
+    }
+
+    else{
+
+        stars = "⭐";
+
+    }
+
+
+    document
+        .getElementById("finalStars")
+        .textContent = stars;
+
+
+    let message;
+
+
+    if(score === 60){
+
+        message =
+        "🏆 ¡Puntaje perfecto! Eres una verdadera estrella de las multiplicaciones.";
+
+    }
+
+    else if(score >= 40){
+
+        message =
+        "🚀 ¡Excelente trabajo! Estás muy cerca de dominar todas las multiplicaciones.";
+
+    }
+
+    else if(score >= 20){
+
+        message =
+        "💪 ¡Muy bien! Sigue practicando y cada vez resolverás más retos.";
+
+    }
+
+    else{
+
+        message =
+        "📚 ¡Buen intento! Practica un poco más y vuelve a completar la misión.";
+
+    }
+
+
+    document
+        .getElementById("finalMessage")
+        .textContent = message;
+
+}
+
+
+/* =========================================
+   REINICIAR
+========================================= */
+
+function restartGame(){
+
+    document
+        .getElementById("result")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("game")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("home")
+        .classList
+        .remove("hidden");
+
+
+    document
+        .getElementById("homeError")
+        .textContent = "";
+
+}
+
+</script>
+
+</body>
+</html>
+```
